@@ -37,7 +37,7 @@ public class Byn {
     }
 
     public Byn roundDown() {
-        return new Byn((this.value/100)*100);
+        return new Byn((value/100)*100);
     }
 
     public int compareTo(Byn o) {
