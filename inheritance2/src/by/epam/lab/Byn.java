@@ -1,6 +1,6 @@
 package by.epam.lab;
 
-public class Byn {
+public class Byn implements Comparable<Byn>{
     private final int value;
 
     public Byn (){
@@ -19,25 +19,24 @@ public class Byn {
         return value;
     }
 
-    public Byn add(int i){
-        return new Byn(value + i);
+    public Byn add(Byn byn) {
+        return new Byn(value + byn.value);
     }
-    public Byn add(Byn o){
-        return new Byn(value + o.value);
+
+    public Byn sub(Byn byn) {
+        return new Byn(value - byn.value);
     }
 
     public Byn mul(int i) {
-        return new Byn(value*i);
-    }
-    public Byn mul(double i){
-        return new Byn((int)Math.round(value*i));
-    }
-    public Byn sub(Byn o){
-        return new Byn(value - o.value);
+        return new Byn(value * i);
     }
 
-    public Byn roundDown() {
-        return new Byn((value/100)*100);
+    public Byn mul(double i, RoundMethod roundMethod, int accuracy) {
+        return new Byn(roundMethod.round(value * i, accuracy));
+    }
+
+    public Byn round(RoundMethod roundMethod, int accuracy) {
+        return new Byn(roundMethod.round(value, accuracy));
     }
 
     public int compareTo(Byn o) {
@@ -47,5 +46,13 @@ public class Byn {
     @Override
     public String toString() {
         return (value / 100 + "." + value % 100 / 10 + value % 10);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Byn byn = (Byn) o;
+        return value == byn.value;
     }
 }

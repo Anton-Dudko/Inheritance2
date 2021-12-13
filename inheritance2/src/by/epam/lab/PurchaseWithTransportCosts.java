@@ -4,7 +4,6 @@ public class PurchaseWithTransportCosts extends AbstractPurchase{
     private Byn transportCosts;
 
     public PurchaseWithTransportCosts(){
-
     }
 
     public PurchaseWithTransportCosts (Product product, int number, Byn transportCosts) {
@@ -17,9 +16,13 @@ public class PurchaseWithTransportCosts extends AbstractPurchase{
         this.transportCosts = new Byn(transportCosts);
     }
 
+    public Byn getTransportCosts() {
+        return transportCosts;
+    }
+
     @Override
-    public Byn unitPrice() {
-        return getProduct().getPrice().add(transportCosts);
+    protected Byn getFinalCost(Byn baseCost) {
+        return baseCost.add(transportCosts);
     }
 
     @Override

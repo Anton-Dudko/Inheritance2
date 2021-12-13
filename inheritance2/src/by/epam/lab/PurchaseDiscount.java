@@ -21,12 +21,12 @@ public class PurchaseDiscount extends AbstractPurchase{
     }
 
     @Override
-    public Byn unitPrice() {
-        return getProduct().getPrice().sub(discount);
+    protected Byn getFinalCost(Byn baseCost) {
+        return baseCost.sub(discount.mul(getNumber()));
     }
 
     @Override
-    public String toString() {
+    public String fieldsToString() {
         return String.format("%s;%s", super.fieldsToString(), discount);
     }
 }

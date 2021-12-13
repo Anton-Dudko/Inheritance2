@@ -1,7 +1,7 @@
 package by.epam.lab;
 
 public class PurchasePercentDiscount extends AbstractPurchase{
-    private final int limit = 11;
+    private static final int LIMIT = 11;
     private double percentDiscount;
 
     public PurchasePercentDiscount() {
@@ -12,22 +12,18 @@ public class PurchasePercentDiscount extends AbstractPurchase{
         this.percentDiscount = percentDiscount;
     }
 
-    public int getLimit() {
-        return limit;
-    }
-
     @Override
-    public Byn unitPrice() {
-        double discount = percentDiscount;
-        if (getNumber() < limit) {
-            discount = 0;
+    protected Byn getFinalCost(Byn baseCost) {
+        Byn byn = baseCost;
+        if (getNumber() >= LIMIT) {
+            byn = byn.mul(1.0 - percentDiscount / 100, RoundMethod.FLOOR, 0);
         }
-        return getProduct().getPrice().mul((1-discount/100));
+        return byn;
     }
 
     @Override
-    public String fieldsToString() {
-        return String.format("%s;%s", super.fieldsToString(), percentDiscount);
+    protected String fieldsToString() {
+        return String.format("%s;%.2f", super.fieldsToString(), percentDiscount);
     }
 
 }
